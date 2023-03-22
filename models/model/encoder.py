@@ -1,7 +1,7 @@
 import torch
 from torch import nn
-from blocks.encoder_layer import EncoderLayer
-from embedding.transformerEmbedding import TransformerEmbedding
+from models.blocks.encoder_layer import EncoderLayer
+from models.embedding.transformerEmbedding import TransformerEmbedding
 
 class Encoder(nn.Module) :
     def __init__(self, vocab_size, d_model, max_len, device, drop_prob, n_head, n_layers, hidden) : 

@@ -1,7 +1,7 @@
 import torch
 from torch import nn
-from blocks.decoder_layer import DecoderLayer
-from embedding.transformerEmbedding import TransformerEmbedding
+from models.blocks.decoder_layer import DecoderLayer
+from models.embedding.transformerEmbedding import TransformerEmbedding
 
 class Decoder(nn.Module) :
     def __init__(self, vocab_size, d_model, max_len, device, drop_prob, n_head, n_layers, hidden) : 

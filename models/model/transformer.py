@@ -1,7 +1,7 @@
 import torch
 from torch import nn
-from model.encoder import Encoder
-from model.decoder import Decoder
+from models.model.encoder import Encoder
+from models.model.decoder import Decoder
 
 class Transformer(nn.Module) :
     def __init__(self, source_pad_idx, target_pad_idx, enc_vocab_size, dec_vocab_size, d_model, max_len, device, drop_prob, n_head, n_layers, hidden) : 

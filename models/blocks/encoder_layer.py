@@ -1,8 +1,8 @@
 import torch
 from torch import nn
-from layers.multi_head_attention import MultiHeadAttention
-from layers.feed_forward_network import FeedForwardNetwork
-from layers.layer_norm import LayerNorm
+from models.layers.multi_head_attention import MultiHeadAttention
+from models.layers.feed_forward_network import FeedForwardNetwork
+from models.layers.layer_norm import LayerNorm
 
 class EncoderLayer(nn.Module) :
     def __init__(self, d_model, n_head, hidden, drop_prob) :
