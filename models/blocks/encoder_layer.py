@@ -6,7 +6,7 @@ from models.layers.layer_norm import LayerNorm
 
 class EncoderLayer(nn.Module) :
     def __init__(self, d_model, n_head, hidden, drop_prob) :
-        super(EncoderLayer, self).__init()
+        super(EncoderLayer, self).__init__()
         self.attention = MultiHeadAttention(d_model, n_head)
         self.attention_norm = LayerNorm(d_model)    
         self.ffn = FeedForwardNetwork(d_model, hidden)

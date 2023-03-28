@@ -5,12 +5,12 @@ from models.layers.scaled_dot_product_attention import ScaledDotProductAttention
 
 class MultiHeadAttention(nn.Module): 
     def __init__(self, d_model, n_head) :
-        super(MultiHeadAttention, self).__init__
+        super(MultiHeadAttention, self).__init__()
         self.n_head = n_head
+        self.attention = ScaledDotProductAttention()
         self.W_q = nn.Linear(d_model, d_model)
         self.W_k = nn.Linear(d_model, d_model)
         self.W_v = nn.Linear(d_model, d_model)
-        self.attention = ScaledDotProductAttention()
         self.W_concat = nn.Linear(d_model, d_model)
         
     def forward(self, q, k, v, mask) : 
