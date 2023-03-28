@@ -4,13 +4,14 @@ from models.model.encoder import Encoder
 from models.model.decoder import Decoder
 
 class Transformer(nn.Module) :
-    def __init__(self, source_pad_idx, target_pad_idx, enc_vocab_size, dec_vocab_size, d_model, max_len, device, drop_prob, n_head, n_layers, hidden) : 
+    def __init__(self, source_pad_idx, target_pad_idx, target_sos_idx, enc_vocab_size, dec_vocab_size, d_model, max_len, device, drop_prob, n_head, n_layers, hidden) : 
         super(Transformer, self).__init__()
         
         ## 패딩마스크
         self.source_pad_idx = source_pad_idx
         self.target_pad_idx = target_pad_idx
-        
+        self.target_sos_idx = target_sos_idx
+        self.device =device
         self.encoder = Encoder(vocab_size=enc_vocab_size,
                                d_model=d_model,
                                max_len=max_len,
@@ -31,13 +32,11 @@ class Transformer(nn.Module) :
                                hidden=hidden
                                )
         
-        self.softmax = nn.Softmax()
-        
     def forward(self, source, target) :
         
         source_mask = self.make_pad_mask(source, source, self.source_pad_idx, self.source_pad_idx)
         cross_mask = self.make_pad_mask(target, source, self.target_pad_idx, self.source_pad_idx)
-        target_mask = self.make_pad_mask(target, target, self.target_pad_idx, self.target_pad_idx)
+        target_mask = self.make_pad_mask(target, target, self.target_pad_idx, self.target_pad_idx) 
         target_mask = target_mask * self.make_tgt_mask(target, target)
         
         source_encoded = self.encoder(source, source_mask)
@@ -60,7 +59,7 @@ class Transformer(nn.Module) :
         k = k.repeat(1, 1, len_q, 1)
         
         # q는 transpose를 고려하여 unsqueeze 위치가 다름.
-        q = q.ne(q_pad_idx).unsqueeze(1).unsqueeze(2)
+        q = q.ne(q_pad_idx).unsqueeze(1).unsqueeze(3)
         q = q.repeat(1, 1, 1, len_k)
          
         # query와 key의 연산에서 pad mask가 필요함

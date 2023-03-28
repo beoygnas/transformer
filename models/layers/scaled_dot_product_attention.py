@@ -14,7 +14,7 @@ class ScaledDotProductAttention(nn.Module) :
         batch_size, head, length, d_tensor = k.size() 
         
         # 1. Matmul
-        score = q @ k.transpose(2, 3)/math.sqrt(d_tensor)
+        score = (q @ k.transpose(2, 3)) / math.sqrt(d_tensor)
         
         # 2. mask
         if mask is not None : 
